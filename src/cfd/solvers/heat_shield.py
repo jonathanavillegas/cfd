@@ -209,12 +209,14 @@ def time_step_3D(Nr, Ntheta, Nz, dr, dtheta, dz, dt, T, q, r, k, rho, cp):
     # Top surface (z=0): Neumann BC -k * ∂T/∂z = q
     # Using centered difference: ∂T/∂z ≈ (T[1] - T[-1]) / (2*dz)
     # So: -k * (T[1] - T[-1]) / (2*dz) = q
-    # Therefore: T[-1] = T[1] - (2*q*dz / k)
+    # Rearranging: -k*T[1] + k*T[-1] = 2*q*dz
+    # Therefore: T[-1] = T[1] + (2*q*dz / k)
     # Note: q is in kW/m², convert to W/m²
+    # Positive q means heat flowing INTO domain (heating), so T[-1] > T[1]
     for i in range(1, Nr+1):
         for j in range(Ntheta):
             # Top surface ghost node (z=-dz)
-            T_ext[i, j, 0] = T_ext[i, j, 1] - (2 * q[i-1, j] * 1000 * dz / k)
+            T_ext[i, j, 0] = T_ext[i, j, 1] + (2 * q[i-1, j] * 1000 * dz / k)
             # Bottom surface ghost node (z=thickness+dz) - insulated
             T_ext[i, j, Nz+1] = T_ext[i, j, Nz]
     
