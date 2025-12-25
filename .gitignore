@@ -1,0 +1,23 @@
+# Virtual environment directories (keep source code, ignore venv files)
+my_env/bin/
+my_env/lib/
+my_env/include/
+my_env/share/
+my_env/pyvenv.cfg
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
