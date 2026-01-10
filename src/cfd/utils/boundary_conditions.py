@@ -24,6 +24,8 @@ def boundary_matrix(num_nodes, numXNodes, numYNodes):
     BW, BE, BN, BS : lists
         Indices of nodes on West, East, North, South boundaries
     """
+
+    # Define points on west and east boundary
     BW = []
     BE = []
     for i in range(numYNodes):
@@ -68,8 +70,6 @@ def set_dirichlet(num_nodes, i):
 def set_neumann(num_nodes, dx, dy, numXNodes, i):
     """
     Create Neumann boundary condition row for matrix.
-    
-    Note: Original code had typo "nuemann" - this is the corrected version.
     
     Parameters:
     -----------

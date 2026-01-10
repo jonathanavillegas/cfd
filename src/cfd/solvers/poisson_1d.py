@@ -6,8 +6,8 @@ from ..utils.finite_difference import build_matrix_1D, def_forceFunction_1D
 from ..utils.boundary_conditions import enforceBC_1D
 
 
-def solve_1d_steady(num_nodes, length, k, BCR_type="neumann", qR=10, SL=0.0001, 
-                   source_index=50, source_strength=-100):
+def solve_1d_steady(num_nodes, length, k, BCL_type, BCR_type, sl, sr, 
+                   source_pos, source_strength):
     """
     Solve 1D steady-state heat conduction equation.
     
@@ -19,12 +19,18 @@ def solve_1d_steady(num_nodes, length, k, BCR_type="neumann", qR=10, SL=0.0001,
         Domain length
     k : float
         Thermal conductivity
+    BCL_type : str
+        Left boundary condition type: "dirichlet" or "neumann"
     BCR_type : str
-        Right boundary condition type: "dirichlet", "neumann", or "robin"
-    qR : float
-        Right boundary flux (for Neumann)
-    SL : float
+        Right boundary condition type: "dirichlet" or "neumann"
+    sl : float
         Left boundary temperature (Dirichlet)
+        or
+        Left boundary flux (Neumann)
+    sr : float
+        Right boundary temperature (Dirichlet)
+        or
+        Right boundary flux (Neumann)
     source_index : int
         Index of source location
     source_strength : float
@@ -42,28 +48,27 @@ def solve_1d_steady(num_nodes, length, k, BCR_type="neumann", qR=10, SL=0.0001,
     
     # Define BCs
     BCL = np.zeros(num_nodes)
-    BCL[0] = 1
+    if BCL_type == "dirichlet":
+        BCL[0] = 1
+        SL = sl
+    elif BCL_type == "neumann":
+        BCL[0] = -2/dx**2
+        BCL[1] = 2/dx**2
+        C = sl
+        SL =-(C) / k
     
     BCR = np.zeros(num_nodes)
     if BCR_type == "dirichlet":
         BCR[-1] = 1
-        SR = 10
+        SR = sr
     elif BCR_type == "neumann":
         BCR[-1] = -2/dx**2
         BCR[-2] = 2/dx**2
-        C = 1
-        S = 0
-        SR = -(S - C/dx) / k
-    elif BCR_type == "robin":
-        a = 100
-        b = 10
-        c = 10
-        BCR[-1] = (2/dx**2) * (1 + b*dx/a)
-        S = 0
-        SR = -(S - (2*c)/(dx*a)) / k
+        C = sr
+        SR = -(C) / k
     
     # Define forcing function
-    fx = def_forceFunction_1D(num_nodes, k)
+    fx = def_forceFunction_1D(num_nodes, k, length, dx, source_pos, source_strength)
     S = enforceBC_1D(fx, SL, SR)
     
     # Build and solve matrix

@@ -213,7 +213,7 @@ def build_matrix_2D(num_nodes, numXNodes, numYNodes, BCW_type, BCE_type,
     return matrix_i
 
 
-def def_forceFunction_1D(num_nodes, k):
+def def_forceFunction_1D(num_nodes, k, length, dx, source_pos, source_strength):
     """
     Define forcing function for 1D problem.
     
@@ -223,6 +223,12 @@ def def_forceFunction_1D(num_nodes, k):
         Number of nodes
     k : float
         Thermal conductivity
+    length : float
+        Length of domain
+    source_pos : int
+        Position of source location (m from left boundary)
+    source_strength : float
+        Source strength
     
     Returns:
     --------
@@ -230,8 +236,8 @@ def def_forceFunction_1D(num_nodes, k):
         Force vector
     """
     f = np.zeros(num_nodes)
-    # Add sources here
-    f[50] = -100
+    # Add source here
+    f[int(source_pos/length * num_nodes)] = -source_strength / dx
     f = np.array(f)
     f = f/k
     return f
