@@ -54,7 +54,7 @@ def solve_2d_steady(numXNodes, numYNodes, xL, yL, k,
     dy = yL / (numYNodes - 1)
     
     # Build solution vector given BCs and desired source value
-    S_vector = def_forceFunction_2D(num_nodes, source_i, source_j, k, source_strength, numXNodes)
+    S_vector = def_forceFunction_2D(num_nodes, source_i, source_j, k, source_strength, numXNodes, numYNodes, xL, yL)
     
     SW_vector = def_BCSolution(BCW_type, SW, k)
     SE_vector = def_BCSolution(BCE_type, SE, k)

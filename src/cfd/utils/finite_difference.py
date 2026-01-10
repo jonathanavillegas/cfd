@@ -243,7 +243,7 @@ def def_forceFunction_1D(num_nodes, k, length, dx, source_pos, source_strength):
     return f
 
 
-def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes):
+def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes, numYNodes, xL, yL):
     """
     Define forcing function for 2D problem.
     
@@ -258,19 +258,31 @@ def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes):
     k : float
         Thermal conductivity
     S : float
-        Source strength
+        Source strength (volumetric source)
     numXNodes : int
         Number of nodes in x-direction
+    numYNodes : int
+        Number of nodes in y-direction
+    xL : float
+        Length of domain in x-direction
+    yL : float
+        Length of domain in y-direction
     
     Returns:
     --------
     f : ndarray
         Force vector
     """
+    dx = xL / (numXNodes - 1)
+    dy = yL / (numYNodes - 1)
     f = np.zeros(num_nodes)
     # Add sources here
-    XY = (source_i + (source_j - 1) * numXNodes)
-    f[XY] = -S
+    x_pos = source_i * numXNodes / xL
+    y_pos = source_j * numYNodes / yL
+    XY = (int(x_pos) + (int(y_pos) - 1) * numXNodes)
+    # Ensure index is within bounds before assigning
+    if 0 <= XY < num_nodes:
+        f[XY] = -S / (dx * dy)
     f = np.array(f)
     f = f/k
     return f

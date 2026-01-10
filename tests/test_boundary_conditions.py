@@ -31,13 +31,14 @@ class TestBoundaryConditions(unittest.TestCase):
     
     def test_def_BCSolution(self):
         """Test BC solution calculation."""
-        # Dirichlet
-        result = def_BCSolution("dirichlet", 0, 0.1, 1.0, 0)
+        # Dirichlet: pass temperature directly
+        result = def_BCSolution("dirichlet", 0, 1.0)
         self.assertEqual(result, 0)
         
-        # Neumann
-        result = def_BCSolution("neumann", 0, 0.1, 1.0, 5)
-        self.assertAlmostEqual(result, 1000.0, places=1)
+        # Neumann: pass flux and grid spacing
+        # For flux q=5, grid spacing d=0.1, k=1.0: result = (-5 * 0.1) / 1.0 = -0.5
+        result = def_BCSolution("neumann", 5, 1.0, 0.1)
+        self.assertAlmostEqual(result, -0.5, places=1)
 
 
 if __name__ == '__main__':

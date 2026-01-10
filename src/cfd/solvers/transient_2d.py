@@ -199,10 +199,11 @@ def solve_2d_transient(numXNodes, numYNodes, xL, yL, time, dt, k, rho, cp, T0,
     q[numXNodes * source_j + source_i] = source_strength
     
     # Store BCs
-    SW = def_BCSolution(BCW_type, 10, dx, k, SW_temp)
-    SE = def_BCSolution(BCE_type, 10, dx, k, SE_temp)
-    SN = def_BCSolution(BCN_type, 10, dy, k, SN_temp)
-    SS = def_BCSolution(BCS_type, 10, dy, k, SS_temp)
+    # For Dirichlet: pass temperature directly; for Neumann: pass flux and grid spacing
+    SW = def_BCSolution(BCW_type, SW_temp, k, dx if BCW_type == "neumann" else None)
+    SE = def_BCSolution(BCE_type, SE_temp, k, dx if BCE_type == "neumann" else None)
+    SN = def_BCSolution(BCN_type, SN_temp, k, dy if BCN_type == "neumann" else None)
+    SS = def_BCSolution(BCS_type, SS_temp, k, dy if BCS_type == "neumann" else None)
     
     # Build initial condition
     ic = initial_condition(num_nodes, numXNodes, numYNodes, T0, SW, SE, SN, SS)
