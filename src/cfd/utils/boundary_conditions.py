@@ -102,22 +102,18 @@ def set_neumann(num_nodes, dx, dy, numXNodes, i):
     return BC
 
 
-def def_BCSolution(BCtype, S, d, k, C):
+def def_BCSolution(BCtype, S, k):
     """
     Calculate solution value for boundary condition.
     
     Parameters:
     -----------
     BCtype : str
-        Type of BC: "dirichlet", "neumann", or "robin"
+        Type of BC: "dirichlet", or "neumann"
     S : float
         Source value
-    d : float
-        Distance/grid spacing
     k : float
         Thermal conductivity
-    C : float
-        Flux value (for Neumann or Robin)
     
     Returns:
     --------
@@ -126,11 +122,8 @@ def def_BCSolution(BCtype, S, d, k, C):
     """
     if BCtype == "dirichlet":
         return S
-    elif BCtype == "neumann" or BCtype == "nuemann":  # Support typo for backward compat
-        return (-S + 2*C/d) / k
-    elif BCtype == "robin":
-        c = 3  # TODO: Make this a parameter
-        return (-S + (2*c)/(d)) / k
+    elif BCtype == "neumann":
+        return (-S) / k
     else:
         raise ValueError(f"Unknown boundary condition type: {BCtype}")
 

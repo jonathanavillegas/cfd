@@ -14,14 +14,29 @@ numXNodes = 50
 numYNodes = 50
 xL = 10
 yL = 10
-k = 0.001
+k = .1
+
+# Define boundary conditions
+BCW_type = "neumann"
+BCE_type = "neumann"
+BCN_type = "dirichlet"
+BCS_type = "dirichlet"
+source_i = 25
+source_j = 25
+source_strength = 1000
+
+# Define boundary values; Temperature for Dirichlet, Flux for Neumann
+SW = 50
+SE = -5
+SN = -100
+SS = 100
 
 # Solve
-x, y, T = solve_2d_steady(numXNodes, numYNodes, xL, yL, k)
+x, y, T = solve_2d_steady(numXNodes, numYNodes, xL, yL, k, BCW_type, BCE_type, BCN_type, BCS_type, source_i, source_j, source_strength, SW, SE, SN, SS)
 
 # Plot
 plt.figure(figsize=(8, 6))
-plt.imshow(T, extent=[0, xL, 0, yL], origin='lower', cmap='viridis')
+plt.imshow(T, extent=(0, xL, 0, yL), origin='lower', cmap='viridis')
 plt.colorbar(label='Temperature')
 plt.title('Steady State Heat Distribution')
 plt.xlabel('X')
