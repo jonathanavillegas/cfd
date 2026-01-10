@@ -24,7 +24,7 @@ thickness = 0.05
 
 # Time parameters
 time = 100
-dt = 0.1
+dt = 1
 
 # Material properties
 k = 0.04

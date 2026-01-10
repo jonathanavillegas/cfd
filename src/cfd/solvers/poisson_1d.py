@@ -56,6 +56,8 @@ def solve_1d_steady(num_nodes, length, k, BCL_type, BCR_type, sl, sr,
         BCL[1] = 2/dx**2
         C = sl
         SL =-(C) / k
+    else:
+        raise ValueError(f"Invalid left boundary condition type: {BCL_type}. Must be 'dirichlet' or 'neumann'.")
     
     BCR = np.zeros(num_nodes)
     if BCR_type == "dirichlet":
@@ -66,6 +68,8 @@ def solve_1d_steady(num_nodes, length, k, BCL_type, BCR_type, sl, sr,
         BCR[-2] = 2/dx**2
         C = sr
         SR = -(C) / k
+    else:
+        raise ValueError(f"Invalid right boundary condition type: {BCR_type}. Must be 'dirichlet' or 'neumann'.")
     
     # Define forcing function
     fx = def_forceFunction_1D(num_nodes, k, length, dx, source_pos, source_strength)

@@ -14,21 +14,21 @@ numXNodes = 50
 numYNodes = 50
 xL = 10
 yL = 10
-k = .1
+k = .01
 
 # Define boundary conditions
 BCW_type = "neumann"
 BCE_type = "neumann"
 BCN_type = "dirichlet"
 BCS_type = "dirichlet"
-source_i = 25
-source_j = 25
-source_strength = 1000
+source_i = 5
+source_j = 5
+source_strength = 10
 
 # Define boundary values; Temperature for Dirichlet, Flux for Neumann
-SW = 50
+SW = 5
 SE = -5
-SN = -100
+SN = 100
 SS = 100
 
 # Solve

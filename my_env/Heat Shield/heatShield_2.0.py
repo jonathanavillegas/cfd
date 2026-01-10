@@ -49,25 +49,7 @@ answer = np.array(f.transient_run_3D(time, Nr, Ntheta, Nz, dr, dtheta, dz, dt, i
 #Stopping point; it runs but need to figure out plotting
 # Extract top surface (z = 0 layer)
 z_index = 0
-surface_frames = np.array([frame[:, :, z_index] for frame in answer])  # shape: (Nt, Nr, Ntheta)
-
-R_grid, Theta_grid = np.meshgrid(r, theta, indexing='ij')
-X = R_grid * np.cos(Theta_grid)
-Y = R_grid * np.sin(Theta_grid)
-
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
-surf = [ax.plot_surface(X, Y, surface_frames[0], cmap='hot')]
-
-def update_3d(frame):
-    ax.clear()
-    ax.plot_surface(X, Y, surface_frames[frame], cmap='hot')
-    ax.set_zlim(np.min(surface_frames), np.max(surface_frames))
-    ax.set_title(f'Time = {frame * dt:.2f} s')
-    return ax,
-
-ani = animation.FuncAnimation(fig, update_3d, frames=len(surface_frames), interval=100)
-plt.show()  
+surface_frames = np.array([frame[:, :, z_index] for frame in answer])  # shape: (Nt, Nr, Ntheta
 
 # Fix θ index to 0
 theta_index = 0
@@ -80,7 +62,7 @@ z_vals = np.linspace(0, thickness, Nz)
 R_grid, Z_grid = np.meshgrid(r_vals, z_vals, indexing='ij')  # shape (Nr, Nz)
 
 fig, ax = plt.subplots()
-c = ax.imshow(rz_slice[0], origin='lower', aspect='auto', extent=[0, thickness, 0, R], cmap='hot')
+c = ax.imshow(rz_slice[0], origin='lower', aspect='auto', extent=(0, thickness, 0, R), cmap='hot')
 fig.colorbar(c, ax=ax)
 ax.set_title('r-z Cross Section of Temperature')
 ax.set_xlabel('z [m]')
