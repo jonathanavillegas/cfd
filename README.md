@@ -98,5 +98,7 @@ The package supports:
 - **Neumann**: Fixed heat flux
 - **Robin**: Mixed boundary condition
 
+
+
 AI was used to assist with code structure and with writing function descriptions
 
