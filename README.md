@@ -1,4 +1,4 @@
-# CFD Heat Transfer Solver
+# Finite Difference Heat Transfer Solver
 
 A Python package for solving heat conduction problems using finite difference methods.
 
