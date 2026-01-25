@@ -1,9 +1,5 @@
-# Virtual environment directories (keep source code, ignore venv files)
-my_env/bin/
-my_env/lib/
-my_env/include/
-my_env/share/
-my_env/pyvenv.cfg
+# Virtual environment directories
+my_env/
 
 # Python cache
 __pycache__/
