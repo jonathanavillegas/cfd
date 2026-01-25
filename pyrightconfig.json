@@ -1,0 +1,7 @@
+{
+    "extraPaths": ["src"],
+    "include": ["src", "scripts", "tests"],
+    "exclude": ["my_env", "**/__pycache__", "**/node_modules"]
+}
+
+
