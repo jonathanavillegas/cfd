@@ -89,5 +89,5 @@ Two boundary condition types are supported:
 
 ## Disclosure
 
-AI was used to assist with code structure and with writing function descriptions
+AI was used to assist with code structure, with writing function descriptions, and with commenting code for readability. All finite difference methods and model logic were developed and implemented by me
 
