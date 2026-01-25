@@ -251,10 +251,10 @@ def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes, numYNod
     -----------
     num_nodes : int
         Total number of nodes
-    source_i : int
-        x-index of source location
-    source_j : int
-        y-index of source location
+    source_i : int or None
+        x-index of source location (None if no source)
+    source_j : int or None
+        y-index of source location (None if no source)
     k : float
         Thermal conductivity
     S : float
@@ -277,12 +277,13 @@ def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes, numYNod
     dy = yL / (numYNodes - 1)
     f = np.zeros(num_nodes)
     # Add sources here
-    x_pos = source_i * numXNodes / xL
-    y_pos = source_j * numYNodes / yL
-    XY = (int(x_pos) + (int(y_pos) - 1) * numXNodes)
-    # Ensure index is within bounds before assigning
-    if 0 <= XY < num_nodes:
-        f[XY] = -S / (dx * dy)
+    if source_i is not None and source_j is not None and S != 0:
+        x_pos = source_i * numXNodes / xL
+        y_pos = source_j * numYNodes / yL
+        XY = (int(x_pos) + (int(y_pos) - 1) * numXNodes)
+        # Ensure index is within bounds before assigning
+        if 0 <= XY < num_nodes:
+            f[XY] = -S / (dx * dy)
     f = np.array(f)
     f = f/k
     return f
