@@ -5,7 +5,7 @@ A Python package for solving heat conduction problems using finite difference me
 ## Features
 
 - **1D Steady-State Solver**: Solves 1D heat conduction with Dirichlet and Neumann boundary conditions
-- **2D Steady-State Solver**: Solves 2D heat conduction with Dirichlet and Neumann boundary conditions. Results are consistent across different grid resolutions.
+- **2D Steady-State Solver**: Solves 2D heat conduction with Dirichlet and Neumann boundary conditions
 - **2D Transient Solver**: Solves time-dependent 2D heat conduction with Dirichlet and Neumann boundary conditions
 - **Heat Shield Solvers**: 2D and 3D cylindrical coordinate solvers for heat shield simulations
 - **Visualization**: 2D animated plots, cylindrical plots, and r-z cross-sections
