@@ -7,31 +7,6 @@ import matplotlib.animation as animation
 from ..utils.coordinate_utils import cylindrical_to_cartesian
 
 
-def plot_2d_heatmap(T, x, y, title='Temperature Distribution', cmap='hot'):
-    """
-    Plot 2D heatmap of temperature field.
-    
-    Parameters:
-    -----------
-    T : ndarray
-        Temperature field (2D array)
-    x, y : ndarray
-        Spatial coordinates
-    title : str
-        Plot title
-    cmap : str
-        Colormap name
-    """
-    plt.figure(figsize=(8, 6))
-    plt.imshow(T, extent=[0, x[-1], 0, y[-1]], origin='lower', cmap=cmap)
-    plt.colorbar(label='Temperature')
-    plt.title(title)
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.grid(False)
-    plt.show()
-
-
 def plot_2d_animated(T_frames, x, y, dt, title='Temperature Evolution', cmap='hot'):
     """
     Animated 2D heatmap showing temperature evolution.
@@ -52,7 +27,7 @@ def plot_2d_animated(T_frames, x, y, dt, title='Temperature Evolution', cmap='ho
     T_frames = np.array(T_frames)
     fig, ax = plt.subplots()
     cax = ax.imshow(T_frames[0], cmap=cmap, origin='lower', 
-                    extent=[0, x[-1], 0, y[-1]], 
+                    extent=(0, x[-1], 0, y[-1]), 
                     vmin=np.min(T_frames), vmax=np.max(T_frames))
     fig.colorbar(cax, label='Temperature')
     ax.set_title(f"{title} - Time = 0.0 s")
@@ -90,7 +65,8 @@ def plot_cylindrical_2d_animated(T_frames, r, theta, dt, title='Temperature Evol
         Colormap name
     """
     T_frames = np.array(T_frames)
-    X, Y = cylindrical_to_cartesian(r, theta)
+    coords = cylindrical_to_cartesian(r, theta)
+    X, Y = coords[0], coords[1]
     
     fig, ax = plt.subplots(figsize=(6, 6))
     c = ax.pcolormesh(X, Y, T_frames[0], shading='auto', cmap=cmap, 
