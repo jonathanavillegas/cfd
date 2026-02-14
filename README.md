@@ -8,6 +8,7 @@ A Python package for solving heat conduction problems using finite difference me
 - **2D Steady-State Solver**: Solves 2D heat conduction with Dirichlet and Neumann boundary conditions
 - **2D Transient Solver**: Solves time-dependent 2D heat conduction with Dirichlet and Neumann boundary conditions
 - **Heat Shield Solvers**: 2D and 3D cylindrical coordinate solvers for heat shield simulations
+- **Ablative Heat Shield Solver**: 3D solver with material sublimation physics, dynamic surface tracking, and latent heat accumulation
 - **Visualization**: 2D animated plots, cylindrical plots, and r-z cross-sections
 
 ## Installation
@@ -38,6 +39,7 @@ python scripts/run_2d_steady.py
 python scripts/run_2d_transient.py
 python scripts/run_heat_shield_2d.py
 python scripts/run_heat_shield_3d.py
+python scripts/run_ablative_heat_shield_3d.py
 ```
 
 Modify parameters in the script files to customize simulations.
@@ -86,6 +88,7 @@ Two boundary condition types are supported:
 **Notes:**
 - Both 2D solvers use coordinates for source location (`source_x`, `source_y`) with bounds checking
 - Source terms are scaled automatically to maintain consistent results across different grid resolutions
+- Ablative solver tracks material sublimation, latent heat accumulation, and surface recession as material ablates away
 
 ## Disclosure
 
