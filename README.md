@@ -9,7 +9,6 @@ A Python package for solving heat conduction problems using finite difference me
 - **2D Transient Solver**: Solves time-dependent 2D heat conduction with Dirichlet and Neumann boundary conditions
 - **Heat Shield Solvers**: 2D and 3D cylindrical coordinate solvers for heat shield simulations
 - **Ablative Heat Shield Solver**: 3D solver with material sublimation physics, dynamic surface tracking, and latent heat accumulation
-- **Visualization**: 2D animated plots, cylindrical plots, and r-z cross-sections
 
 ## Installation
 
@@ -44,20 +43,6 @@ python scripts/run_ablative_heat_shield_3d.py
 
 Modify parameters in the script files to customize simulations.
 
-## Visualization
-
-Available plotting functions:
-
-- `plot_2d_animated()`: 2D animated plots for Cartesian coordinates
-- `plot_cylindrical_2d_animated()`: 2D animated plots for cylindrical coordinates (r-θ plane)
-- `plot_rz_cross_sections()`: r-z cross-sections for 3D heat shield visualization
-
-Example:
-```python
-from cfd.visualization.plot_3d import plot_rz_cross_sections
-
-plot_rz_cross_sections(transient, r, theta, z, time=100, dt=1, theta_idx=0)
-```
 
 ## Project Structure
 
@@ -92,5 +77,5 @@ Two boundary condition types are supported:
 
 ## Disclosure
 
-AI was used to assist with code structure, with writing function descriptions, and with commenting code for readability. All finite difference methods and model logic were developed and implemented by me
+AI was used to assist with code structure, writing function descriptions, commenting code for readability, and creating this GitHub. All finite difference methods and model logic were developed and implemented by me
 
