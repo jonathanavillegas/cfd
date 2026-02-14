@@ -17,3 +17,6 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
+# Test outputs and trial runs
+Trial Runs/
+
