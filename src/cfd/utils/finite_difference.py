@@ -258,7 +258,9 @@ def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes, numYNod
     k : float
         Thermal conductivity
     S : float
-        Source strength (volumetric source)
+        Source strength as volumetric heat generation rate (W/m³)
+        Note: To compare with Neumann BC flux (W/m²), use S = flux/depth
+        where depth is the out-of-plane dimension (typically 1 m for 2D)
     numXNodes : int
         Number of nodes in x-direction
     numYNodes : int
@@ -278,13 +280,14 @@ def def_forceFunction_2D(num_nodes, source_i, source_j, k, S, numXNodes, numYNod
     f = np.zeros(num_nodes)
     # Add sources here
     if source_i is not None and source_j is not None and S != 0:
-        x_pos = source_i * numXNodes / xL
-        y_pos = source_j * numYNodes / yL
-        XY = (int(x_pos) + (int(y_pos) - 1) * numXNodes)
+        # Convert 2D indices (i, j) to 1D index
+        # Index mapping: index_1D = i + j * numXNodes
+        XY = source_i + source_j * numXNodes
         # Ensure index is within bounds before assigning
+        # S is volumetric source rate (W/m³), so we use -S/k directly
+        # This matches the scaling of Neumann BC (flux in W/m² -> -flux/k)
         if 0 <= XY < num_nodes:
-            f[XY] = -S / (dx * dy)
+            f[XY] = -S / k
     f = np.array(f)
-    f = f/k
     return f
 

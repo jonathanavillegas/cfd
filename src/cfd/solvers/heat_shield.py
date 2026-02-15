@@ -333,7 +333,7 @@ def transient_run_3D(time, Nr, Ntheta, Nz, dr, dtheta, dz, dt, initial_condition
     return transient
 
 
-def solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp, initial_temp=0):
+def solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp, initial_temp=0, distribution_type=1):
     """
     Solve 2D heat shield problem.
     
@@ -368,8 +368,11 @@ def solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp, initial_temp=0):
     dr = R / (Nr - 1)
     dtheta = 2*np.pi / (Ntheta - 1)
     
-    # Create flux distribution
-    r, theta, q = create_flux_distribution(Nr, Ntheta)
+    # Generate r coordinates based on actual domain radius R
+    r = np.linspace(0, R, Nr)
+    
+    # Create flux distribution evaluated at actual grid coordinates
+    r, theta, q = create_flux_distribution(Nr, Ntheta, distribution_type=distribution_type, r_coords=r)
     
     # Initial condition
     initial_condition = np.zeros((Nr, Ntheta))
@@ -381,7 +384,7 @@ def solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp, initial_temp=0):
     return r, theta, transient
 
 
-def solve_heat_shield_3d(Nr, Ntheta, Nz, R, thickness, time, dt, k, rho, cp, initial_temp=0):
+def solve_heat_shield_3d(Nr, Ntheta, Nz, R, thickness, time, dt, k, rho, cp, initial_temp=0, distribution_type=1):
     """
     Solve 3D heat shield problem.
     
@@ -421,8 +424,11 @@ def solve_heat_shield_3d(Nr, Ntheta, Nz, R, thickness, time, dt, k, rho, cp, ini
     dtheta = 2*np.pi / (Ntheta - 1)
     dz = thickness / Nz
     
-    # Create flux distribution
-    r, theta, q = create_flux_distribution(Nr, Ntheta)
+    # Generate r coordinates based on actual domain radius R
+    r = np.linspace(0, R, Nr)
+    
+    # Create flux distribution evaluated at actual grid coordinates
+    r, theta, q = create_flux_distribution(Nr, Ntheta, distribution_type=distribution_type, r_coords=r)
     z = np.linspace(0, thickness, Nz)
     
     # Initial condition

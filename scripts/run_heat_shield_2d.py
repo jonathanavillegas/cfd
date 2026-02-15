@@ -10,21 +10,30 @@ from cfd.solvers.heat_shield import solve_heat_shield_2d
 from cfd.visualization.plot_2d import plot_cylindrical_2d_animated
 
 # Define 2D geometry
-Nr = 50
-Ntheta = 50
-R = 80
+Nr = 50  # [-] Number of radial nodes
+Ntheta = 50  # [-] Number of angular nodes
+distribution_type = 1  # [-] Heat flux distribution: 1 = Original (R=75m), 2 = Vehicle shape (R=0.4m)
+# Radius automatically set based on distribution type
+if distribution_type == 1:
+    R = 75.0  # [m] Outer radius for distribution 1
+elif distribution_type == 2:
+    R = 0.4  # [m] Outer radius for distribution 2 (400 mm vehicle scale)
+else:
+    R = 75.0  # [m] Default to distribution 1 radius
 
 # Time parameters
-time = 100
-dt = 0.01
+time = 100  # [s] Total simulation time
+dt = 0.1  # [s] Time step size
 
 # Material properties
-k = 0.04
-rho = 270
-cp = 1100
+k = 0.04  # [W/(m·K)] Thermal conductivity
+rho = 270  # [kg/m³] Density
+cp = 1100  # [J/(kg·K)] Specific heat capacity
 
 # Solve
-r, theta, transient = solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp)
+# Returns: r [m], theta [rad], transient [K] - Temperature field at each time step
+r, theta, transient = solve_heat_shield_2d(Nr, Ntheta, R, time, dt, k, rho, cp, 
+                                            distribution_type=distribution_type)
 
 # Visualize
 plot_cylindrical_2d_animated(transient, r, theta, dt, title='Temperature Evolution')
