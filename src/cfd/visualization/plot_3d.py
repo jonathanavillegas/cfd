@@ -184,12 +184,14 @@ def plot_rz_cross_section_animated(T, r, theta, z, dt, theta_idx=0, title='r-z C
     # Create figure
     fig, ax = plt.subplots(figsize=(10, 8))
     
-    # Initial plot (Z_grid is x-axis, R_grid is y-axis)
-    im = ax.pcolormesh(Z_grid, R_grid, rz_frames[0], cmap='hot', shading='auto', 
+    # Initial plot (R_grid is x-axis, Z_grid is y-axis - switched from original)
+    # rz_frames[0] has shape (Nr, Nz) which matches R_grid and Z_grid shape
+    im = ax.pcolormesh(R_grid, Z_grid, rz_frames[0], cmap='hot', shading='auto', 
                       vmin=vmin, vmax=vmax)
     cbar = fig.colorbar(im, ax=ax, label='Temperature [K]')
-    ax.set_xlabel('z [m]')
-    ax.set_ylabel('r [m]')
+    ax.set_xlabel('r [m]')
+    ax.set_ylabel('z [m]')
+    ax.invert_yaxis()  # Invert y-axis so z=0 (surface) is at the top
     ax.set_title(f'{title} - Time = 0.0 s\n(θ={theta[theta_idx]:.2f} rad)')
     
     def update(frame):

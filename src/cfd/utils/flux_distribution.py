@@ -17,7 +17,7 @@ def create_flux_distribution(Nr, Ntheta, distribution_type=1, r_coords=None):
         Number of angular nodes
     distribution_type : int
         Type of distribution to use:
-        1 = Original distribution (r up to 75 m)
+        1 = Original distribution (r up to 75 mm)
         2 = Vehicle shape distribution (r up to 0.4 m / 400 mm)
     r_coords : ndarray, optional
         Radial coordinates at which to evaluate flux. If None, uses default based on distribution_type.
@@ -32,16 +32,17 @@ def create_flux_distribution(Nr, Ntheta, distribution_type=1, r_coords=None):
         Heat flux array of shape (Nr, Ntheta) [kW/m²]
     """
     if distribution_type == 1:
-        # Original distribution
-        r_data = np.array([0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30,
+        # Original distribution (scaled to 75 mm instead of 75 m)
+        r_data_mm = np.array([0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30,
                        33, 36, 39, 42, 45, 48, 51, 54, 57,
                        60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
                        70, 71, 72, 73, 74, 75])
+        r_data = r_data_mm / 1000.0  # Convert mm to m
         q_data = np.array([87.5, 86, 84, 80, 75, 69, 64, 60, 56, 53, 51,
                        48, 46, 44, 42, 41, 40, 39, 38.5, 38,
                        38, 40, 43, 48, 54, 62, 66, 70, 74, 77,
                        76, 74, 71, 68, 64, 60])
-        r_max = 75.0  # [m]
+        r_max = 0.075  # [m] = 75 mm
     elif distribution_type == 2:
         # Vehicle shape distribution (from image: 0-400 mm, heat flux 28-44.5 kW/m²)
         # Convert mm to m for r_data

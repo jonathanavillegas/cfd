@@ -12,14 +12,14 @@ from cfd.visualization.plot_2d import plot_cylindrical_2d_animated
 # Define 2D geometry
 Nr = 50  # [-] Number of radial nodes
 Ntheta = 50  # [-] Number of angular nodes
-distribution_type = 1  # [-] Heat flux distribution: 1 = Original (R=75m), 2 = Vehicle shape (R=0.4m)
+distribution_type = 1  # [-] Heat flux distribution: 1 = Original (R=75mm), 2 = Vehicle shape (R=0.4m)
 # Radius automatically set based on distribution type
 if distribution_type == 1:
-    R = 75.0  # [m] Outer radius for distribution 1
+    R = 0.075  # [m] Outer radius for distribution 1 (75 mm)
 elif distribution_type == 2:
     R = 0.4  # [m] Outer radius for distribution 2 (400 mm vehicle scale)
 else:
-    R = 75.0  # [m] Default to distribution 1 radius
+    R = 0.075  # [m] Default to distribution 1 radius (75 mm)
 
 # Time parameters
 time = 100  # [s] Total simulation time
